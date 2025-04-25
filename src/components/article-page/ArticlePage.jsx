@@ -10,8 +10,8 @@ import styles from './ArticlePage.module.scss';
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
-  const { slug } = useParams();
   const { article, status, error } = useSelector((state) => state.article);
+  const { slug } = useParams();
 
   useEffect(() => {
     dispatch(fetchArticle(slug));
@@ -86,7 +86,6 @@ const ArticlePage = () => {
               {new Date(createdAt).toLocaleDateString()}
             </div>
           </div>
-
           <img
             className={styles['article__userpic']}
             src={author.image}

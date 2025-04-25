@@ -17,7 +17,7 @@ const Articles = () => {
     dispatch(fetchArticles(currentPage));
   }, [dispatch, currentPage]);
 
-  const onChangePage = (page) => {
+  const handleChangePage = (page) => {
     dispatch(fetchArticles(page));
   };
 
@@ -50,7 +50,7 @@ const Articles = () => {
         current={currentPage}
         total={articlesCount}
         pageSize={10}
-        onChange={onChangePage}
+        onChange={handleChangePage}
         showSizeChanger={false}
       ></Pagination>
     </section>

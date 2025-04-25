@@ -55,7 +55,6 @@ const Article = ({ article }) => {
               {new Date(createdAt).toLocaleDateString()}
             </div>
           </div>
-
           <img
             className={styles['article__userpic']}
             src={author.image}

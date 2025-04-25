@@ -2,6 +2,8 @@
   padding: 24px 0;
 
   &__container {
+    display: flex;
+    justify-content: center;
     max-width: 992px;
     margin: 0 auto;
     padding: 0 24px;
