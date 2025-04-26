@@ -85,6 +85,9 @@
   }
 
   &__descr {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
     margin-bottom: 24px;
     font-size: 12px;
     font-weight: 400;
@@ -97,5 +100,28 @@
     font-weight: 400;
     line-height: 28px;
     color: rgba(0, 0, 0, 0.75);
+  }
+
+  &__delete-button {
+    margin-right: 12px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #f5222d;
+    background-color: #ffffff;
+    border: 1px solid #f5222d;
+    border-radius: 5px;
+  }
+
+  &__edit-button {
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #52c41a;
+    background-color: #ffffff;
+    border: 1px solid #52c41a;
+    border-radius: 5px;
   }
 }

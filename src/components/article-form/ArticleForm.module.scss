@@ -1,0 +1,108 @@
+.article-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 48px 32px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+
+  &__title {
+    align-self: center;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #262626;
+  }
+
+  &__label {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #262626;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    outline: none;
+
+    &::placeholder {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #bfbfbf;
+    }
+
+    &--tag {
+      width: 300px;
+    }
+  }
+
+  &__textarea {
+    height: 160px;
+    resize: none;
+  }
+
+  &__tag-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__tag {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__delete-button {
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #f5222d;
+    background-color: #ffffff;
+    border: 1px solid #f5222d;
+    border-radius: 4px;
+  }
+
+  &__add-button {
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #1890ff;
+    background-color: #ffffff;
+    border: 1px solid #1890ff;
+    border-radius: 4px;
+  }
+
+  &__submit-button {
+    width: 300px;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #ffffff;
+    background-color: #1890ff;
+    border-radius: 4px;
+  }
+
+  &__error {
+    border: 1px solid #ff0000;
+  }
+
+  &__error-message {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #ff0000;
+  }
+}

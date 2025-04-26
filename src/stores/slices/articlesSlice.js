@@ -27,6 +27,7 @@ const articlesSlice = createSlice({
     builder
       .addCase(fetchArticles.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchArticles.fulfilled, (state, action) => {
         state.status = 'success';
@@ -36,7 +37,7 @@ const articlesSlice = createSlice({
       })
       .addCase(fetchArticles.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

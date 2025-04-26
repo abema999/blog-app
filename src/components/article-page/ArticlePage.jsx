@@ -1,17 +1,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Spin, Alert, Flex } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Spin, Alert, Flex, Popconfirm } from 'antd';
 import ReactMarkdown from 'react-markdown';
 
-import { fetchArticle, clearArticle } from '../../stores/slices/articleSlice';
+import { fetchArticle, clearArticle, deleteArticle } from '../../stores/slices/articleSlice';
 
 import styles from './ArticlePage.module.scss';
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
   const { article, status, error } = useSelector((state) => state.article);
+  const { user } = useSelector((state) => state.user);
   const { slug } = useParams();
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    navigate(`/articles/${slug}/edit`);
+  };
+
+  const handleDelete = async () => {
+    const result = await dispatch(deleteArticle(slug));
+    if (deleteArticle.fulfilled.match(result)) {
+      navigate('/articles');
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchArticle(slug));
@@ -40,6 +53,7 @@ const ArticlePage = () => {
   if (!article) return null;
 
   const { title, favoritesCount, tagList, author, createdAt, description, body } = article;
+  const isAuthor = user && article && user.username === article.author.username;
 
   return (
     <article className={styles['article']}>
@@ -93,7 +107,26 @@ const ArticlePage = () => {
           ></img>
         </div>
       </header>
-      <section className={styles['article__descr']}>{description}</section>
+      <section className={styles['article__descr']}>
+        {description}
+        {isAuthor && (
+          <div>
+            <Popconfirm
+              title="Are you sure to delete this article?"
+              onConfirm={handleDelete}
+              onCancel={(e) => console.log(e)}
+              okText="Yes"
+              cancelText="No"
+              placement={'right'}
+            >
+              <button className={styles['article__delete-button']}>Delete</button>
+            </Popconfirm>
+            <button className={styles['article__edit-button']} onClick={handleEdit}>
+              Edit
+            </button>
+          </div>
+        )}
+      </section>
       <section className={styles['article__text']}>
         <ReactMarkdown>{body}</ReactMarkdown>
       </section>
