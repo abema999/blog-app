@@ -13,13 +13,13 @@ const Articles = () => {
     (state) => state.articles,
   );
 
-  useEffect(() => {
-    dispatch(fetchArticles(currentPage));
-  }, [dispatch, currentPage]);
-
   const handleChangePage = (page) => {
     dispatch(fetchArticles(page));
   };
+
+  useEffect(() => {
+    dispatch(fetchArticles(currentPage));
+  }, [dispatch, currentPage]);
 
   if (status === 'loading') {
     return (

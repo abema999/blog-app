@@ -20,13 +20,13 @@ const App = () => {
       <main className={styles['main']}>
         <div className={styles['main__container']}>
           <Routes>
-            <Route path="/" element={<Navigate to="/articles" />}></Route>
+            <Route path="/" element={<Navigate to="/articles"></Navigate>}></Route>
             <Route path="/articles" element={<Articles></Articles>}></Route>
             <Route path="/articles/:slug" element={<ArticlePage></ArticlePage>}></Route>
             <Route path="/sign-up" element={<SignUpForm></SignUpForm>}></Route>
             <Route path="/sign-in" element={<SignInForm></SignInForm>}></Route>
-            <Route path="/profile" element={<Profile></Profile>}></Route>
             <Route element={<PrivateRoute></PrivateRoute>}>
+              <Route path="/profile" element={<Profile></Profile>}></Route>
               <Route path="/new-article" element={<ArticleCreatePage></ArticleCreatePage>}></Route>
             </Route>
             <Route

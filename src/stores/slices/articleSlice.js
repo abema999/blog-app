@@ -3,19 +3,32 @@ import axios from 'axios';
 
 const BASE_URL = 'https://blog-platform.kata.academy/api';
 
-export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug) => {
-  const response = await axios.get(`${BASE_URL}/articles/${slug}`);
-  return response.data.article;
-});
+export const fetchArticle = createAsyncThunk(
+  'article/fetchArticle',
+  async (slug, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().user?.user?.token;
+      const response = await axios.get(`${BASE_URL}/articles/${slug}`, {
+        headers: token ? { Authorization: `Token ${token}` } : undefined,
+      });
+      return response.data.article;
+    } catch (error) {
+      return rejectWithValue(error.response.data.errors);
+    }
+  },
+);
 
 export const createArticle = createAsyncThunk(
   'article/createArticle',
   async (articleData, { getState, rejectWithValue }) => {
     try {
+      const token = getState().user?.user?.token;
       const response = await axios.post(
         `${BASE_URL}/articles`,
         { article: articleData },
-        { headers: { Authorization: `Token ${getState().user.user.token}` } },
+        {
+          headers: token ? { Authorization: `Token ${token}` } : undefined,
+        },
       );
       return response.data.article;
     } catch (error) {
@@ -28,11 +41,12 @@ export const updateArticle = createAsyncThunk(
   'article/updateArticle',
   async ({ slug, ...articleData }, { getState, rejectWithValue }) => {
     try {
+      const token = getState().user?.user?.token;
       const response = await axios.put(
         `${BASE_URL}/articles/${slug}`,
         { article: articleData },
         {
-          headers: { Authorization: `Token ${getState().user.user.token}` },
+          headers: token ? { Authorization: `Token ${token}` } : undefined,
         },
       );
       return response.data.article;
@@ -46,11 +60,44 @@ export const deleteArticle = createAsyncThunk(
   'article/deleteArticle',
   async (slug, { getState, rejectWithValue }) => {
     try {
+      const token = getState().user?.user?.token;
       await axios.delete(`${BASE_URL}/articles/${slug}`, {
-        headers: { Authorization: `Token ${getState().user.user.token}` },
+        headers: token ? { Authorization: `Token ${token}` } : undefined,
       });
     } catch (error) {
       return rejectWithValue(error.response.data.errors);
+    }
+  },
+);
+
+export const likeArticle = createAsyncThunk(
+  'articles/likeArticle',
+  async (slug, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().user?.user?.token;
+      const response = await axios.post(
+        `${BASE_URL}/articles/${slug}/favorite`,
+        {},
+        { headers: token ? { Authorization: `Token ${token}` } : undefined },
+      );
+      return response.data.article;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const unlikeArticle = createAsyncThunk(
+  'articles/unlikeArticle',
+  async (slug, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().user?.user?.token;
+      const response = await axios.delete(`${BASE_URL}/articles/${slug}/favorite`, {
+        headers: token ? { Authorization: `Token ${token}` } : undefined,
+      });
+      return response.data.article;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   },
 );
@@ -76,6 +123,7 @@ const articleSlice = createSlice({
     builder
       .addCase(fetchArticle.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.status = 'success';
@@ -83,7 +131,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticle.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message;
+        state.error = action.payload;
       })
 
       .addCase(createArticle.pending, (state) => {
@@ -123,6 +171,18 @@ const articleSlice = createSlice({
       .addCase(deleteArticle.rejected, (state, action) => {
         state.status = 'error';
         state.error = action.payload;
+      })
+
+      .addCase(likeArticle.fulfilled, (state, action) => {
+        if (state.article?.slug === action.payload.slug) {
+          state.article = action.payload;
+        }
+      })
+
+      .addCase(unlikeArticle.fulfilled, (state, action) => {
+        if (state.article?.slug === action.payload.slug) {
+          state.article = action.payload;
+        }
       });
   },
 });

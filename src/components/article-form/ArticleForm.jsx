@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useForm, useFieldArray } from 'react-hook-form';
 
 import { createArticle, updateArticle, clearError } from '../../stores/slices/articleSlice';
 
@@ -25,7 +25,7 @@ const ArticleForm = ({ initialData = {}, isEdit = false }) => {
       title: initialData.title || '',
       description: initialData.description || '',
       body: initialData.body || '',
-      tagList: initialData.tagList?.map((tag) => ({ name: tag })) || [{ name: '' }],
+      tagList: initialData.tagList.map((tag) => ({ name: tag })) || [{ name: '' }],
     },
   });
 

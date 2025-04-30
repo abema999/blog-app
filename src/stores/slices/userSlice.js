@@ -35,10 +35,13 @@ export const updateUser = createAsyncThunk(
   'user/updateUser',
   async (userData, { getState, rejectWithValue }) => {
     try {
+      const token = getState().user?.user?.token;
       const response = await axios.put(
         `${BASE_URL}/user`,
         { user: userData },
-        { headers: { Authorization: `Token ${getState().user.user.token}` } },
+        {
+          headers: token ? { Authorization: `Token ${token}` } : undefined,
+        },
       );
       return response.data.user;
     } catch (error) {

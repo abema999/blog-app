@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import ArticleForm from '../article-form/ArticleForm';
 import { fetchArticle } from '../../stores/slices/articleSlice';
+import ArticleForm from '../article-form/ArticleForm';
 
 const ArticleEditPage = () => {
   const dispatch = useDispatch();
