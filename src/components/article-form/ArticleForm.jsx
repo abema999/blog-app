@@ -25,7 +25,7 @@ const ArticleForm = ({ initialData = {}, isEdit = false }) => {
       title: initialData.title || '',
       description: initialData.description || '',
       body: initialData.body || '',
-      tagList: initialData.tagList.map((tag) => ({ name: tag })) || [{ name: '' }],
+      tagList: initialData.tagList?.map((tag) => ({ name: tag })) || [{ name: '' }],
     },
   });
 
